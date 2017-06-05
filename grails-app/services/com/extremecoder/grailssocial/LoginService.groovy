@@ -14,13 +14,15 @@ class LoginService {
 
     def providerRegistration(def params) {
         def responseData
-        ProviderkUser providerUser = ProviderkUser.findByUserId(params.userAccountId)
+        ProviderUser providerUser = ProviderUser.findByUserId(params.userAccountId)
         if(providerUser) {
             if(providerUser.accessToken != params.accessToken) {
                 providerUser.accessToken = params.accessToken
                 providerUser.accessTokenExpires = new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(params.getLong('expireIn')))
                 providerUser.save(flush: true)
             }
+            SecUser user = providerUser.secUser
+            userLoginInternallyWithoutPassword(user.username)
         } else {
             SecUser user = SecUser.findByUsername(params.email) ?: new SecUser(
                     password: params.accessToken, //not really necessary
@@ -31,9 +33,9 @@ class LoginService {
                     passwordExpired: false,
                     username: params.email
             ).save(flush: true)
-            def providerUserRole = SecRole.findByAuthority(RoleType.PROVIDER_USER)
+            def providerUserRole = SecRole.findByAuthority(RoleType.PROVIDER_USER.value)
             SecUserSecRole secUserSecRole = new SecUserSecRole(secUser: user, secRole: providerUserRole).save(flush: true)
-            providerUser = new ProviderkUser(accessToken: params.accessToken,
+            providerUser = new ProviderUser(accessToken: params.accessToken,
                     accessTokenExpires: new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(params.getLong('expireIn'))),
                     userId: params.userAccountId, secUser: user, providerName: params.providerName
             ).save(flush: true)
@@ -48,6 +50,7 @@ class LoginService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(details, null,
                 AuthorityUtils.createAuthorityList(getUserRoleType(details)))
         SecurityContextHolder.getContext().setAuthentication(authentication)
+        def w = 1
     }
 
     def getUserRoleType(SecUser secUser) {

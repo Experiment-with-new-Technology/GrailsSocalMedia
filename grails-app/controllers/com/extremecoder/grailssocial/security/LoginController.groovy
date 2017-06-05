@@ -1,7 +1,5 @@
 package com.extremecoder.grailssocial.security
 
-import com.extremecoder.grailssocial.ProviderkUser
-import com.extremecoder.grailssocial.SecUser
 import grails.converters.JSON
 import grails.plugin.springsecurity.SpringSecurityUtils
 import org.springframework.security.access.annotation.Secured
@@ -13,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.WebAttributes
 
 import javax.servlet.http.HttpServletResponse
-import java.util.concurrent.TimeUnit
 
 @Secured('permitAll')
 class LoginController {

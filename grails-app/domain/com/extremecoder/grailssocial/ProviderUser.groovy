@@ -2,7 +2,7 @@ package com.extremecoder.grailssocial
 
 import com.extremecoder.grailssocial.SecUser
 
-class ProviderkUser {
+class ProviderUser {
 
     Long id
     String userId

@@ -8,10 +8,10 @@
 
 
 <sec:ifLoggedIn>
-    <li><a href="#" target="" title="${sec.loggedInUserInfo(field: 'username')} Profile"><i
-            class="fa fa-user"></i> ${sec.loggedInUserInfo(field: 'username')} </a></li>
-    <li><a href="${createLink(controller: 'logout')}" target="" title="Logout"><i
-            class="fa fa-sign-out"></i>Logout</a></li>
+    Welcome Back!
+    <a href="${createLink(controller: 'logout')}" target="" title="Logout"><i
+            class="fa fa-sign-out"></i>Logout</a>
 </sec:ifLoggedIn>
+
 </body>
 </html>
