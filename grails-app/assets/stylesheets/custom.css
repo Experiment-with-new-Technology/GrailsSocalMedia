@@ -1,0 +1,13 @@
+
+.input-margin-bottom {
+    margin-bottom: 25px;
+}
+
+.panel-title-right {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    float:right;
+    position: relative;
+    top:-42px;
+    font-weight: bold;
+}
