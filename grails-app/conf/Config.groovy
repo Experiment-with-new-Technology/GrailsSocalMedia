@@ -133,3 +133,7 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/favicon.ico':  ['permitAll']
 ]
 
+//log4j = {
+//    debug 'org.springframework.security'
+//}
+

@@ -62,8 +62,8 @@ class LoginController {
     }
 
     @Secured('permitAll')
-    def providerRegistration() {
-        def responseData = loginService.providerRegistration(params)
+    def socialLogin() {
+        def responseData = loginService.socialLogin(params)
         render responseData as JSON
     }
 

@@ -23,7 +23,6 @@
         });
     }
     </script>
-
 </head>
 <body>
 <div class="container">
@@ -31,7 +30,7 @@
         <div id="loginbox" class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-2">
             <div class="panel panel-info" >
                 <div class="panel-heading">
-                    <div class="panel-title panel-title-left">Login</div>
+                    <div class="panel-title panel-title-left">Register</div>
                     <div class="panel-title-right"><a href="${createLink(uri: '/')}" target="_self">${message(code:'app.project.name.title' )}</a></div>
                 </div>
                 <div class="panel-body" >
@@ -41,25 +40,45 @@
                             ${flash.message}
                         </div>
                     </g:if>
-                    <form class="form-horizontal" role="form" action='${postUrl}' method='POST' id="loginForm">
-                        <div class="margin-bottom-small btn btn-primary panel-padding-left" onclick="loginWithFacebook()">
-                            <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> Sign in with Facebook
+                    <form id="registerForm" class="form-horizontal" role="form" method='POST'>
+                        <div class="form-group col-md-12">
+                            <label>User Type</label> <br/>
+                            <div class="col-md-6">
+                                <label class="control inline">
+                                    <input type="radio" name="userType" checked="checked" value="provider">
+                                    Brand Owner
+                                </label>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="control inline">
+                                    <input type="radio" name="userType" value="seeker">
+                                    Journalist
+                                </label>
+                            </div>
+                        </div>
+                        <div class="input-group input-margin-bottom">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-cutlery"></i></span>
+                            <input id="companyName" type="text" class="form-control" name="companyName" value="" placeholder="Company Name">
+                        </div>
+                        <div class="margin-bottom-small btn btn-primary panel-padding-left" onclick="checkValidationSocialRegistration()">
+                            <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> Sign Up with Facebook
                         </div>
                         <h4 class="text-center">OR</h4>
                         <div class="input-margin-bottom">
                         </div>
                         <div class="input-group input-margin-bottom">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input id="username" type="text" class="form-control" name="j_username" value="" placeholder="Email Address">
+                            <input id="username" type="email" class="form-control" name="username" value="" placeholder="Email Address">
                         </div>
                         <div class="input-group input-margin-bottom">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="password" type="password" class="form-control" name="j_password" placeholder="password">
+                            <input id="password" type="password" class="form-control" name="password" placeholder="password">
                         </div>
-                            <button class="btn btn-primary col-md-12 col-sm-12 col-xs-12" type="submit">Login</button>
+                            <button value="signup" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Sign up</button>
                         <div class="col-md-12">
-                            Have not any Account?
-                            <g:link controller="register" action="register">Register</g:link>
+                            Already Account?
+                            <g:link controller="login" action="auth" >Login</g:link>
                         </div>
                     </form>
                 </div>

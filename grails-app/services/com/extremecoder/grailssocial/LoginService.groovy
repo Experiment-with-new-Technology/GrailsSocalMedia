@@ -12,6 +12,23 @@ import java.util.concurrent.TimeUnit
 @Transactional
 class LoginService {
 
+    def socialLogin(def params) {
+        def responseData
+        ProviderUser providerUser = ProviderUser.findByUserId(params.userAccountId)
+        if(providerUser) {
+            if(providerUser.accessToken != params.accessToken) {
+                providerUser.accessToken = params.accessToken
+                providerUser.accessTokenExpires = new Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(params.getLong('expireIn')))
+                providerUser.save(flush: true)
+            }
+            SecUser user = providerUser.secUser
+            userLoginInternallyWithoutPassword(user.username)
+            responseData = ['hasError': false, 'message': 'Sucessfully Login']
+        } else {
+            responseData = ['hasError': true, 'message': 'Not Found']
+        }
+    }
+
     def providerRegistration(def params) {
         def responseData
         ProviderUser providerUser = ProviderUser.findByUserId(params.userAccountId)

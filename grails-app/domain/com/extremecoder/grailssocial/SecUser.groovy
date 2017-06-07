@@ -17,6 +17,8 @@ class SecUser implements Serializable {
 	boolean accountExpired
 	boolean accountLocked
 	boolean passwordExpired
+	String userType
+	String companyName
 
 	SecUser(String username, String password) {
 		this()

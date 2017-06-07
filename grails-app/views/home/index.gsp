@@ -6,11 +6,30 @@
 </head>
 <body>
 
+<script>
+
+</script>
 
 <sec:ifLoggedIn>
     Welcome Back!
     <a href="${createLink(controller: 'logout')}" target="" title="Logout"><i
             class="fa fa-sign-out"></i>Logout</a>
+    <br/>
+    <div class="col-md-5">
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea class="form-control" id="message"></textarea>
+        </div>
+
+        <div class="form-group facebook-pages">
+            <label for="pages">Facebook Pages:</label>
+            <select class="form-control" id="pages">
+            </select>
+            <button class="btn btn-primary" onclick="loadPages('${accessToken}')">Load Pages</button>
+        </div>
+
+        <button class="btn btn-primary" onclick="postToPage()">Post</button>
+    </div>
 </sec:ifLoggedIn>
 
 </body>

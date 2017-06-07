@@ -5,8 +5,7 @@ package com.extremecoder.grailssocial.enums
  */
 enum RoleType {
     USER('ROLE_USER'),
-    ADMIN('ROLE_ADMIN'),
-    PROVIDER_USER('ROLE_PROVIDER_USER')
+    ADMIN('ROLE_ADMIN')
 
 
     final String value
