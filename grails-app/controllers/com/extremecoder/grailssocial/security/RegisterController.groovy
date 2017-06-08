@@ -1,11 +1,13 @@
 package com.extremecoder.grailssocial.security
 
+import grails.converters.JSON
 import org.springframework.security.access.annotation.Secured
 
 class RegisterController {
 
     def registerService
     def loginService
+    def springSecurityService
 
     @Secured('permitAll')
     def register() {
@@ -19,6 +21,8 @@ class RegisterController {
                 if(!response.hasError) {
                     loginService.userLoginInternallyWithoutPassword(response.user.username)
                     redirect(controller: 'home', action: 'index')
+                } else {
+                    flash.message = response.message
                 }
                 break
         }
@@ -26,11 +30,13 @@ class RegisterController {
 
     @Secured('permitAll')
     def registerWithProvider() {
-
+        def response = registerService.providerRegistration(params)
+        render response as JSON
     }
 
-    @Secured('permitAll')
-    def fromRegister() {
-
+    @Secured(['ROLE_USER', 'ROLE_ADMIN'])
+    def linkUpWIthFacebook() {
+        def response = registerService.linkWithFacebook(params)
+        render response as JSON
     }
 }

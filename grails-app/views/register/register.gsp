@@ -3,28 +3,10 @@
 <head>
     <title>Login</title>
     <meta name="layout" content="main"/>
-    <asset:javascript src="facebook.js"></asset:javascript>
-    <script>
-    function registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn) {
-        $.post("${createLink(controller: 'login', action: 'providerRegistration')}",
-            {   email: email,
-                fullName: fullName,
-                userAccountId: userAccountId,
-                providerName: providerName,
-                accessToken: accessToken,
-                expireIn: expireIn
-            },
-            function(result) {
-            if(result.hasError == true) {
-                alert(result.message);
-            } else {
-                window.location.href = "${createLink(controller: 'home')}";
-            }
-        });
-    }
-    </script>
 </head>
 <body>
+<asset:javascript src="facebook.js"></asset:javascript>
+<asset:javascript src="register.js"></asset:javascript>
 <div class="container">
     <div class="panel-start" id="panel-custom">
         <div id="loginbox" class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -75,7 +57,7 @@
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             <input id="password" type="password" class="form-control" name="password" placeholder="password">
                         </div>
-                            <button value="signup" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Sign up</button>
+                            <button value="signup" type="submit" onclick="beforeSubmit();" class="btn btn-primary col-md-12 col-sm-12 col-xs-12">Sign up</button>
                         <div class="col-md-12">
                             Already Account?
                             <g:link controller="login" action="auth" >Login</g:link>

@@ -4,26 +4,6 @@
     <title>Login</title>
     <meta name="layout" content="main"/>
     <asset:javascript src="facebook.js"></asset:javascript>
-    <script>
-    function registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn) {
-        $.post("${createLink(controller: 'login', action: 'providerRegistration')}",
-            {   email: email,
-                fullName: fullName,
-                userAccountId: userAccountId,
-                providerName: providerName,
-                accessToken: accessToken,
-                expireIn: expireIn
-            },
-            function(result) {
-            if(result.hasError == true) {
-                alert(result.message);
-            } else {
-                window.location.href = "${createLink(controller: 'home')}";
-            }
-        });
-    }
-    </script>
-
 </head>
 <body>
 <div class="container">

@@ -5,10 +5,7 @@
     <title>Home Page</title>
 </head>
 <body>
-
-<script>
-
-</script>
+<asset:javascript src="facebook.js"></asset:javascript>
 
 <sec:ifLoggedIn>
     Welcome Back!
@@ -25,7 +22,7 @@
             <label for="pages">Facebook Pages:</label>
             <select class="form-control" id="pages">
             </select>
-            <button class="btn btn-primary" onclick="loadPages('${accessToken}')">Load Pages</button>
+            <button class="btn btn-primary" onclick="loadPages('${user?.companyName}', '${user?.userType}')">Load Pages</button>
         </div>
 
         <button class="btn btn-primary" onclick="postToPage()">Post</button>

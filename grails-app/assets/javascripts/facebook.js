@@ -18,34 +18,29 @@ window.fbAsyncInit = function() {
 }(document, 'script', 'facebook-jssdk'));
 
 // login with facebook with extra permissions
-function loginFacebook() {
+function registerWithFacebook(companyName, userType) {
     FB.login(function(response) {
         if (response.status === 'connected') {
             accessToken = response.authResponse.accessToken;
             userId = response.authResponse.userID;
             expireIn = response.authResponse.expiresIn;
-            getFacebookInfo(accessToken, expireIn);
+            FB.api('/me', 'GET', {fields: 'name,email,id'}, function(response) {
+                var fullName = response.name;
+                var email = response.email;
+                var userAccountId = response.id;
+                var providerName = 'FACEBOOK';
+                if(email && fullName && userAccountId && providerName) {
+                    registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn, companyName, userType);
+                } else {
+                    alert('Something error. Please try again');
+                }
+            });
         } else if (response.status === 'not_authorized') {
             alert('You are not logged in.');
         } else {
             alert('You are not logged into Facebook.');
         }
     }, {scope: 'email,manage_pages,publish_pages'});
-}
-
-// getting basic user info
-function getFacebookInfo(accessToken, expireIn) {
-    FB.api('/me', 'GET', {fields: 'name,email,id'}, function(response) {
-        var fullName = response.name;
-        var email = response.email;
-        var userAccountId = response.id;
-        var providerName = 'FACEBOOK';
-        if(email && fullName && userAccountId && providerName) {
-            registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn);
-        } else {
-            alert('Something error. Please try again');
-        }
-    });
 }
 
 
@@ -74,7 +69,6 @@ function loginWithFacebook() {
     }, {scope: 'email,manage_pages,publish_pages'});
 }
 
-
 function checkValidationSocialRegistration() {
     var form = $('#registerForm');
     var valid = form.validate(
@@ -87,17 +81,14 @@ function checkValidationSocialRegistration() {
             }
         }
     );
-    var ww = form.valid();
-    var aa = ww;
+    if(form.valid()) {
+        var companyName = $('#companyName').val();
+        var userType = $('#registerForm input[name=userType]:checked').val();
+        registerWithFacebook(companyName, userType);
+    }
 }
 
-
-
-
-
-
-
-function loadPages() {
+function loadPages(companyName, userType) {
     FB.getLoginStatus(function (response) {
         if (response) switch (response.status) {
             case 'connected':
@@ -109,7 +100,6 @@ function loadPages() {
                         select.append($("<option></option>")
                             .attr("value", -1)
                             .text("My Page"));
-
                         $.each(response.data, function (i, page) {
                             select
                                 .append($("<option></option>")
@@ -119,12 +109,47 @@ function loadPages() {
                     }
                 });
                 break;
+            case 'unknown': {
+                linkedWithFacebook(companyName, userType);
+                break;
+            }
             default:
+            {
                 var select = $('#pages');
                 select.empty();
                 break;
+            }
+
+        } else {
+            linkedWithFacebook(companyName, userType);
         }
     },{scope:'manage_pages'});
+}
+
+function linkedWithFacebook(companyName, userType) {
+    FB.login(function(responseFb) {
+        if (responseFb.status === 'connected') {
+            accessToken = responseFb.authResponse.accessToken;
+            userId = responseFb.authResponse.userID;
+            expireIn = responseFb.authResponse.expiresIn;
+            var paramsData = {
+                accessToken: accessToken,
+                userId: userId,
+                expireIn: expireIn
+            };
+            $.post( "GrailsSocial/register/linkUpWIthFacebook", paramsData, function( data ) {
+                if(data.hasError) {
+                    alert(data.message)
+                } else {
+                    loadPages(companyName, userType);
+                }
+            });
+        } else if (responseFb.status === 'not_authorized') {
+            alert('You are not logged in.');
+        } else {
+            alert('You are not logged into Facebook.');
+        }
+    }, {scope: 'email,manage_pages,publish_pages'});
 }
 
 function postToPage() {
@@ -139,4 +164,25 @@ function postToPage() {
         }, function(response) {
         console.log(response);
     });
+}
+
+
+function registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn, companyName, userType) {
+    $.post("/GrailsSocial/register/registerWithProvider",
+        {   email: email,
+            fullName: fullName,
+            userAccountId: userAccountId,
+            providerName: providerName,
+            accessToken: accessToken,
+            expireIn: expireIn,
+            companyName: companyName,
+            userType: userType
+        },
+        function(result) {
+            if(result.hasError == true) {
+                alert(result.message);
+            } else {
+                window.location.href = "/GrailsSocial/home";
+            }
+        });
 }
