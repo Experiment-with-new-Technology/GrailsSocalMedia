@@ -28,3 +28,23 @@ function beforeSubmit() {
         form.submit();
     }
 }
+
+function registrationWithProvider(email, fullName, userAccountId, providerName, accessToken, expireIn, companyName, userType) {
+    $.post("/GrailsSocial/register/registerWithProvider",
+        {   email: email,
+            fullName: fullName,
+            userAccountId: userAccountId,
+            providerName: providerName,
+            accessToken: accessToken,
+            expireIn: expireIn,
+            companyName: companyName,
+            userType: userType
+        },
+        function(result) {
+            if(result.hasError == true) {
+                alert(result.message);
+            } else {
+                window.location.href = "/GrailsSocial/home";
+            }
+        });
+}

@@ -15,6 +15,11 @@
   		<asset:stylesheet src="application.css"/>
 		<asset:javascript src="application.js"/>
 		<g:layoutHead/>
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+        api_key: 86a6j81yviuucl
+        authorize: true
+        scope: r_basicprofile r_emailaddress
+	</script>
 	</head>
 	<body>
 		<div id="grailsLogo" role="banner"><a href="http://grails.org"><asset:image src="grails_logo.png" alt="Grails"/></a></div>

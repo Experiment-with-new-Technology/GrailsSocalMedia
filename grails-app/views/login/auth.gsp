@@ -4,6 +4,8 @@
     <title>Login</title>
     <meta name="layout" content="main"/>
     <asset:javascript src="facebook.js"></asset:javascript>
+    <asset:javascript src="google.js"></asset:javascript>
+    <asset:javascript src="linkedin.js"></asset:javascript>
 </head>
 <body>
 <div class="container">
@@ -22,8 +24,12 @@
                         </div>
                     </g:if>
                     <form class="form-horizontal" role="form" action='${postUrl}' method='POST' id="loginForm">
-                        <div class="margin-bottom-small btn btn-primary panel-padding-left" onclick="loginWithFacebook()">
+                        <div class="input-margin-bottom btn btn-primary" onclick="loginWithFacebook()">
                             <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> Sign in with Facebook
+                        </div>
+                        <div class="input-margin-bottom">
+                            <button class="btn btn-primary" onclick="loginWithLinkedin()">
+                                Login With Linkedin</button>
                         </div>
                         <h4 class="text-center">OR</h4>
                         <div class="input-margin-bottom">

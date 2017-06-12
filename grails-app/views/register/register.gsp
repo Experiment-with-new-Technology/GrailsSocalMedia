@@ -5,8 +5,14 @@
     <meta name="layout" content="main"/>
 </head>
 <body>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="707594748772-f4s12k07p4g5anrc9nc8lnmd96oeksb0.apps.googleusercontent.com">
 <asset:javascript src="facebook.js"></asset:javascript>
 <asset:javascript src="register.js"></asset:javascript>
+<asset:javascript src="google.js"></asset:javascript>
+<asset:javascript src="linkedin.js"></asset:javascript>
+
+
 <div class="container">
     <div class="panel-start" id="panel-custom">
         <div id="loginbox" class="col-md-5 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -43,7 +49,14 @@
                             <span class="input-group-addon"><i class="glyphicon glyphicon-cutlery"></i></span>
                             <input id="companyName" type="text" class="form-control" name="companyName" value="" placeholder="Company Name">
                         </div>
-                        <div class="margin-bottom-small btn btn-primary panel-padding-left" onclick="checkValidationSocialRegistration()">
+                        <div class="input-margin-bottom">
+                            <button class="btn btn-primary" onclick="checkValidationSocialRegistration()">
+                                Sign Up With Linkedin</button>
+                        </div>
+                        <div class="input-margin-bottom">
+                            <div class="g-signin2" data-onsuccess="onSignIn" onclick="googleLogin()"></div>
+                        </div>
+                        <div class="btn btn-primary input-margin-bottom" onclick="checkValidationSocialRegistration()">
                             <i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i> Sign Up with Facebook
                         </div>
                         <h4 class="text-center">OR</h4>
@@ -51,7 +64,7 @@
                         </div>
                         <div class="input-group input-margin-bottom">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            <input id="username" type="email" class="form-control" name="username" value="" placeholder="Email Address">
+                            <input id="username" type="text" class="form-control" name="username" value="" placeholder="Email Address">
                         </div>
                         <div class="input-group input-margin-bottom">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>

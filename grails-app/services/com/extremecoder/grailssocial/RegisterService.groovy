@@ -48,6 +48,8 @@ class RegisterService {
                     accountExpired: false,
                     accountLocked: false,
                     passwordExpired: false,
+                    companyName: params.companyName,
+                    userType: params.userType,
                     username: params.email
             ).save(flush: true)
             def providerUserRole = SecRole.findByAuthority(RoleType.USER.value)
